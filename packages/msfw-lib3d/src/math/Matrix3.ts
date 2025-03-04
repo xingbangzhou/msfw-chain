@@ -1,4 +1,4 @@
-export default class Matrix3 {
+export class Matrix3 {
   constructor(...args: number[])
   // prettier-ignore
   constructor(

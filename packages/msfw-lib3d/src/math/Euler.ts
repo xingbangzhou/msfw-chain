@@ -1,9 +1,12 @@
 import {clamp} from './MathUtils'
-import Matrix4 from './Matrix4'
-import Vector3 from './Vector3'
+import {Matrix4} from './Matrix4'
+import {Quaternion} from './Quaternion'
+import {Vector3} from './Vector3'
 
-export default class Euler {
-  static DEFAULT_ORDER: 'XYZ' | 'YXZ' | 'ZXY' | 'ZYX' | 'YZX' | 'XZY' = 'XYZ'
+export type EulerOrder = 'XYZ' | 'YXZ' | 'ZXY' | 'ZYX' | 'YZX' | 'XZY'
+
+export class Euler {
+  static DEFAULT_ORDER: EulerOrder = 'XYZ'
 
   constructor(
     x = 0,
@@ -186,6 +189,12 @@ export default class Euler {
     return this
   }
 
+  setFromQuaternion(q: Quaternion, order?: EulerOrder, update?: boolean) {
+    _matrix.makeRotationFromQuaternion(q)
+
+    return this.setFromRotationMatrix(_matrix, order, update)
+  }
+
   setFromVector3(v: Vector3, order = this._order) {
     return this.set(v.x, v.y, v.z, order)
   }
@@ -218,3 +227,6 @@ export default class Euler {
     yield this._z
   }
 }
+
+const _matrix = /*@__PURE__*/ new Matrix4()
+const _quaternion = /*@__PURE__*/ new Quaternion()

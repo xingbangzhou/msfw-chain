@@ -2,16 +2,17 @@ export interface BaseEvent<TEventType extends string = string> {
   readonly type: TEventType
 }
 
-export interface Event<TEventType extends string = string, TTarget = unknown> {
+export interface Event<TEventData, TEventType extends string = string, TTarget = unknown> {
   readonly type: TEventType
-  readonly target: TTarget
+  target: TTarget
+  data: TEventData
 }
 
 export type EventListener<TEventData, TEventType extends string, TTarget = unknown> = (
-  event: TEventData & Event<TEventType, TTarget>,
+  event: Event<TEventData, TEventType, TTarget>,
 ) => void
 
-export default class EventDispatcher<TEventMap extends object = NonNullable<null>> {
+export class EventDispatcher<TEventMap extends object = NonNullable<null>> {
   private _listeners?: Record<string, EventListener<any, any, this>[]>
 
   addEventListener<T extends Extract<keyof TEventMap, string>>(
@@ -66,19 +67,21 @@ export default class EventDispatcher<TEventMap extends object = NonNullable<null
     const listeners = this._listeners
     const listenerArray = listeners[type]
 
-    const eventRef = data as any
-
     if (listenerArray !== undefined) {
-      eventRef.target = this
+      const event: Event<TEventMap[T], T, this> = {
+        type: type,
+        target: this,
+        data: data,
+      }
 
       // Make a copy, in case listeners are removed while iterating.
       const array = listenerArray.slice(0)
 
       for (let i = 0, l = array.length; i < l; i++) {
-        array[i].call(this, eventRef)
+        array[i].call(this, event)
       }
 
-      eventRef.target = null
+      event.target = null as any
     }
   }
 }

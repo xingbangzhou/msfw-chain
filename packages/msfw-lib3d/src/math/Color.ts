@@ -1,6 +1,6 @@
 import {clamp} from './MathUtils'
 
-export default class Color {
+export class Color {
   constructor(rOrHex: number, g?: number, b?: number) {
     this.r = 1
     this.g = 1

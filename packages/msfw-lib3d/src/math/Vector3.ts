@@ -1,7 +1,8 @@
 import * as MathUtils from './MathUtils'
-import Matrix4 from './Matrix4'
+import {Matrix4} from './Matrix4'
+import {Quaternion} from './Quaternion'
 
-export default class Vector3 {
+export class Vector3 {
   constructor(x = 0, y = 0, z = 0) {
     this.x = x
     this.y = y
@@ -344,6 +345,55 @@ export default class Vector3 {
 
   setFromMatrixColumn(m: Matrix4, index: number) {
     return this.fromArray(m.elements, index * 4)
+  }
+
+  setFromMatrixPosition(m: Matrix4) {
+    const e = m.elements
+
+    this.x = e[12]
+    this.y = e[13]
+    this.z = e[14]
+
+    return this
+  }
+
+  applyQuaternion(q: Quaternion) {
+    // quaternion q is assumed to have unit length
+
+    const vx = this.x,
+      vy = this.y,
+      vz = this.z
+    const qx = q.x,
+      qy = q.y,
+      qz = q.z,
+      qw = q.w
+
+    // t = 2 * cross( q.xyz, v );
+    const tx = 2 * (qy * vz - qz * vy)
+    const ty = 2 * (qz * vx - qx * vz)
+    const tz = 2 * (qx * vy - qy * vx)
+
+    // v + q.w * t + cross( q.xyz, t );
+    this.x = vx + qw * tx + qy * tz - qz * ty
+    this.y = vy + qw * ty + qz * tx - qx * tz
+    this.z = vz + qw * tz + qx * ty - qy * tx
+
+    return this
+  }
+
+  applyMatrix4(m: Matrix4) {
+    const x = this.x,
+      y = this.y,
+      z = this.z
+    const e = m.elements
+
+    const w = 1 / (e[3] * x + e[7] * y + e[11] * z + e[15])
+
+    this.x = (e[0] * x + e[4] * y + e[8] * z + e[12]) * w
+    this.y = (e[1] * x + e[5] * y + e[9] * z + e[13]) * w
+    this.z = (e[2] * x + e[6] * y + e[10] * z + e[14]) * w
+
+    return this
   }
 
   equals(v: Vector3) {

@@ -1,8 +1,9 @@
 import {WebGLCoordinateSystem} from '../constants'
-import Euler from './Euler'
-import Vector3 from './Vector3'
+import {Euler} from './Euler'
+import {Quaternion} from './Quaternion'
+import {Vector3} from './Vector3'
 
-export default class Matrix4 {
+export class Matrix4 {
   constructor(...args: number[])
   // prettier-ignore
   constructor(
@@ -616,6 +617,10 @@ export default class Matrix4 {
     return this
   }
 
+  makeRotationFromQuaternion(q: Quaternion) {
+    return this.compose(_zero, q, _one)
+  }
+
   lookAt(eye: Vector3, target: Vector3, up: Vector3) {
     const te = this.elements
 
@@ -655,6 +660,96 @@ export default class Matrix4 {
     te[2] = _x.z
     te[6] = _y.z
     te[10] = _z.z
+
+    return this
+  }
+
+  compose(position: Vector3, quaternion: Quaternion, scale: Vector3) {
+    const te = this.elements
+
+    const x = quaternion.x,
+      y = quaternion.y,
+      z = quaternion.z,
+      w = quaternion.w
+    const x2 = x + x,
+      y2 = y + y,
+      z2 = z + z
+    const xx = x * x2,
+      xy = x * y2,
+      xz = x * z2
+    const yy = y * y2,
+      yz = y * z2,
+      zz = z * z2
+    const wx = w * x2,
+      wy = w * y2,
+      wz = w * z2
+
+    const sx = scale.x,
+      sy = scale.y,
+      sz = scale.z
+
+    te[0] = (1 - (yy + zz)) * sx
+    te[1] = (xy + wz) * sx
+    te[2] = (xz - wy) * sx
+    te[3] = 0
+
+    te[4] = (xy - wz) * sy
+    te[5] = (1 - (xx + zz)) * sy
+    te[6] = (yz + wx) * sy
+    te[7] = 0
+
+    te[8] = (xz + wy) * sz
+    te[9] = (yz - wx) * sz
+    te[10] = (1 - (xx + yy)) * sz
+    te[11] = 0
+
+    te[12] = position.x
+    te[13] = position.y
+    te[14] = position.z
+    te[15] = 1
+
+    return this
+  }
+
+  decompose(position: Vector3, quaternion: Quaternion, scale: Vector3) {
+    const te = this.elements
+
+    let sx = _v1.set(te[0], te[1], te[2]).length()
+    const sy = _v1.set(te[4], te[5], te[6]).length()
+    const sz = _v1.set(te[8], te[9], te[10]).length()
+
+    // if determine is negative, we need to invert one scale
+    const det = this.determinant()
+    if (det < 0) sx = -sx
+
+    position.x = te[12]
+    position.y = te[13]
+    position.z = te[14]
+
+    // scale the rotation part
+    _m1.copy(this)
+
+    const invSX = 1 / sx
+    const invSY = 1 / sy
+    const invSZ = 1 / sz
+
+    _m1.elements[0] *= invSX
+    _m1.elements[1] *= invSX
+    _m1.elements[2] *= invSX
+
+    _m1.elements[4] *= invSY
+    _m1.elements[5] *= invSY
+    _m1.elements[6] *= invSY
+
+    _m1.elements[8] *= invSZ
+    _m1.elements[9] *= invSZ
+    _m1.elements[10] *= invSZ
+
+    quaternion.setFromRotationMatrix(_m1)
+
+    scale.x = sx
+    scale.y = sy
+    scale.z = sz
 
     return this
   }
@@ -732,6 +827,9 @@ export default class Matrix4 {
 }
 
 const _v1 = /*@__PURE__*/ new Vector3()
+const _m1 = /*@__PURE__*/ new Matrix4()
+const _zero = /*@__PURE__*/ new Vector3(0, 0, 0)
+const _one = /*@__PURE__*/ new Vector3(1, 1, 1)
 const _x = /*@__PURE__*/ new Vector3()
 const _y = /*@__PURE__*/ new Vector3()
 const _z = /*@__PURE__*/ new Vector3()

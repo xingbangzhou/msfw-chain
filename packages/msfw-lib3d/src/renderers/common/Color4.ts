@@ -1,4 +1,4 @@
-import Color from '../../math/Color'
+import {Color} from '../../math/Color'
 
 export default class Color4 extends Color {
   constructor(r: number, g: number, b: number, a = 1) {

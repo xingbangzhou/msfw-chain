@@ -1,4 +1,6 @@
-export default class Vector4 {
+import * as MathUtils from '../math/MathUtils'
+
+export class Vector4 {
   constructor(x = 0, y = 0, z = 0, w = 1) {
     this.x = x
     this.y = y
@@ -188,19 +190,19 @@ export default class Vector4 {
   clamp(min: Vector4, max: Vector4) {
     // assumes min < max, componentwise
 
-    this.x = Math.max(min.x, Math.min(max.x, this.x))
-    this.y = Math.max(min.y, Math.min(max.y, this.y))
-    this.z = Math.max(min.z, Math.min(max.z, this.z))
-    this.w = Math.max(min.w, Math.min(max.w, this.w))
+    this.x = MathUtils.clamp(this.x, min.x, max.x)
+    this.y = MathUtils.clamp(this.y, min.y, max.y)
+    this.z = MathUtils.clamp(this.z, min.z, max.z)
+    this.w = MathUtils.clamp(this.w, min.w, max.w)
 
     return this
   }
 
   clampScalar(minVal: number, maxVal: number) {
-    this.x = Math.max(minVal, Math.min(maxVal, this.x))
-    this.y = Math.max(minVal, Math.min(maxVal, this.y))
-    this.z = Math.max(minVal, Math.min(maxVal, this.z))
-    this.w = Math.max(minVal, Math.min(maxVal, this.w))
+    this.x = MathUtils.clamp(this.x, minVal, maxVal)
+    this.y = MathUtils.clamp(this.y, minVal, maxVal)
+    this.z = MathUtils.clamp(this.z, minVal, maxVal)
+    this.w = MathUtils.clamp(this.w, minVal, maxVal)
 
     return this
   }

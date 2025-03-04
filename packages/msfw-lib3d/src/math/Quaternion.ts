@@ -1,9 +1,9 @@
-import Euler from './Euler'
+import {Euler} from './Euler'
 import * as MathUtils from './MathUtils'
-import Matrix4 from './Matrix4'
-import Vector3 from './Vector3'
+import {Matrix4} from './Matrix4'
+import {Vector3} from './Vector3'
 
-export default class Quaternion {
+export class Quaternion {
   constructor(x = 0, y = 0, z = 0, w = 1) {
     this._x = x
     this._y = y
