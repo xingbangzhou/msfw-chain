@@ -14,25 +14,24 @@ export default class MsfwServices {
   }
 
   private _emitter = new EventEmitter()
-  private _regns?: Record<string, MsfwRegistration>
-  private _slots?: Record<string, [string, MsfwSlotFn][]>
+  private _regns: Record<string, MsfwRegistration> = {}
+  private _slots: Record<string, [string, MsfwSlotFn][]> = {}
 
   getService(clazz: string) {
-    return this._regns?.[clazz]?.service
+    return this._regns[clazz]?.service
   }
 
   register(ctx: MsfwModuleContext, service: MsfwService) {
     const clazz = service.clazz
 
-    if (this._regns?.[clazz]) {
+    if (this._regns[clazz]) {
       return false
     }
 
-    this._regns = this._regns || {}
     this._regns[clazz] = {ctx, service}
 
     // Signal
-    const l = this._slots?.[clazz]
+    const l = this._slots[clazz]
     l?.forEach(el => {
       service.connectSignal(el[0], el[1])
     })
@@ -44,16 +43,16 @@ export default class MsfwServices {
 
   unregister(ctx: MsfwModuleContext, service: MsfwService) {
     const clazz = service.clazz
-    const regn = this._regns?.[clazz]
+    const regn = this._regns[clazz]
     if (regn?.ctx !== ctx || regn?.service !== service) return
 
     // Signal
-    const l = this._slots?.[clazz]
+    const l = this._slots[clazz]
     l?.forEach(el => {
       service.disconnectSignal(el[0], el[1])
     })
 
-    delete this._regns?.[clazz]
+    delete this._regns[clazz]
     this._emitter.emit(clazz, false, clazz)
   }
 
@@ -88,7 +87,6 @@ export default class MsfwServices {
   }
 
   connectSignal(clazz: string, signal: string, slot: MsfwSlotFn) {
-    if (!this._slots) this._slots = {}
     const ss = this._slots[clazz] || []
     if (!ss.find(el => el[0] === signal && el[1] === slot)) {
       ss.push([signal, slot])
@@ -104,14 +102,14 @@ export default class MsfwServices {
   }
 
   disconnectSignal(clazz: string, signal: string, slot: MsfwSlotFn) {
-    const ss = this._slots?.[clazz]
-    if (!ss) return
+    const ss = this._slots[clazz]
+    if (!ss?.length) return
 
     const idx = ss.findIndex(el => el[0] === signal && el[1] === slot)
     if (idx !== -1) {
       ss.splice(idx, 1)
       if (!ss.length) {
-        delete this._slots?.[clazz]
+        delete this._slots[clazz]
       }
     }
 

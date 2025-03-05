@@ -41,23 +41,28 @@ class MsfwFrameChannel {
 const channel = new MsfwFrameChannel()
 
 export default class MsfwFrameModule extends MsfwExModule {
-  constructor(ctx: MsfwModuleContext, destructor: MsfwDestructor, container: HTMLIFrameElement) {
+  constructor(ctx: MsfwModuleContext, destructor: MsfwDestructor, iframeEl: HTMLIFrameElement) {
     super(ctx, destructor)
 
-    this._container = container
+    this._iframeRef = new WeakRef(iframeEl)
     channel.attach(this)
 
     this.imReady()
   }
 
-  private _container?: HTMLIFrameElement
+  private _iframeRef: WeakRef<HTMLIFrameElement> | null = null
 
   get window() {
-    return this._container?.contentWindow
+    return this._iframeRef?.deref()?.contentWindow
   }
 
   resize(width: number, height: number) {
-    this._container && Object.assign(this._container.style, {width: `${width}px`, height: `${height}px`})
+    const iframeEl = this._iframeRef?.deref()
+    if (!iframeEl) {
+      this.ctx.log('FrameModule', 'resize, error: iframe has been garbage-collected.')
+      return
+    }
+    Object.assign(iframeEl.style, {width: `${width}px`, height: `${height}px`})
   }
 
   protected postMessage(cmd: string, ...args: any[]) {
@@ -67,6 +72,6 @@ export default class MsfwFrameModule extends MsfwExModule {
   protected unload() {
     super.unload()
     channel.detach(this)
-    this._container = undefined
+    this._iframeRef = null
   }
 }

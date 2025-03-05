@@ -55,9 +55,9 @@ export default class MsfwModules {
     return this.load0(className, id, ...args)
   }
 
-  loadFrame(id: string, container: HTMLIFrameElement) {
+  loadFrame(id: string, iframeEl: HTMLIFrameElement) {
     if (!id) return
-    return this.load0(MsfwFrameModule, id, container)
+    return this.load0(MsfwFrameModule, id, iframeEl)
   }
 
   unload(id: string) {

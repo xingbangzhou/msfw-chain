@@ -41,11 +41,11 @@ export default class MsfwFramework extends MsfwModule {
     return moduleInst
   }
 
-  loadFrameModule(id: string, container: HTMLIFrameElement) {
+  loadFrameModule(id: string, iframeEl: HTMLIFrameElement) {
     this.ctx.logger.log('MsfwFramework', 'loadFrameModule: ', id)
     const {_fwCtx} = this
 
-    const frameModule = _fwCtx.modules.loadFrame(id, container)
+    const frameModule = _fwCtx.modules.loadFrame(id, iframeEl)
 
     return frameModule
   }
