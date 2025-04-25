@@ -9,9 +9,9 @@ export default (context: MsfwContext): MsfwConfig => {
     webpack: {
       alias: {
         '@msfw/utils': path.resolve(__dirname, '../../packages/msfw-utils/src'),
-        '@msfw/framework/*': path.resolve(__dirname, '../../packages/msfw-utils/src/*'),
-        '@mfx-js/framework': path.resolve(__dirname, '../../packages/msfw-framework/src'),
-        '@mfx-js/framework/*': path.resolve(__dirname, '../../packages/msfw-framework/src/*'),
+        '@msfw/utils/*': path.resolve(__dirname, '../../packages/msfw-utils/src/*'),
+        '@msfw/framework': path.resolve(__dirname, '../../packages/msfw-framework/src'),
+        '@msfw/framework/*': path.resolve(__dirname, '../../packages/msfw-framework/src/*'),
       },
     },
   }

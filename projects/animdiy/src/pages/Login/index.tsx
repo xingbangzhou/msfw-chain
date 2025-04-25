@@ -1,10 +1,6 @@
 import {memo} from 'react'
 import './index.scss'
 
-const Input = memo(function Input() {
-  return <input></input>
-})
-
 const Login = memo(function Login() {
   return (
     <div className="login">

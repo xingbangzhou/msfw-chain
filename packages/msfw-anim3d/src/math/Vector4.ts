@@ -1,4 +1,4 @@
-import * as MathUtils from '../math/MathUtils'
+import * as MathUtils from './MathUtils'
 
 export class Vector4 {
   constructor(x = 0, y = 0, z = 0, w = 1) {

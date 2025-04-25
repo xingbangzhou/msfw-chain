@@ -1,4 +1,4 @@
-# @msfw/lib3d
+# @msfw/anim3d
 
 
 ## Installation

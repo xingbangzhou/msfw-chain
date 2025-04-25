@@ -1,5 +1,5 @@
 {
-  "name": "main",
+  "name": "animdiy",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -11,8 +11,8 @@
     "start": "msfw serve"
   },
   "devDependencies": {
-    "@msfw/cli": "^1.0.0",
-    "@msfw/tsconfig": "^1.0.0",
+    "@msfw/cli": "^1.1.0",
+    "@msfw/tsconfig": "^1.1.0",
     "@types/node": "^22.5.1",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
