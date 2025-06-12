@@ -1,4 +1,4 @@
-# @msfw/anim3d
+# @msfw/ly3d
 
 
 ## Installation

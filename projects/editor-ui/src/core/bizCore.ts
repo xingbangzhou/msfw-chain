@@ -1,6 +1,6 @@
 import {MsfwFrameworkLauncher} from '@msfw/framework'
 
-class MsfwCore extends MsfwFrameworkLauncher {
+class BizCore extends MsfwFrameworkLauncher {
   constructor() {
     super()
   }
@@ -14,7 +14,7 @@ class MsfwCore extends MsfwFrameworkLauncher {
 
   async init() {
     if (this._initialized) {
-      throw new Error('MsfwCore: has already been initialized.')
+      throw new Error('BizCore: has already been initialized.')
     }
     if (this._initPromise !== null) {
       return this._initPromise
@@ -41,6 +41,6 @@ class MsfwCore extends MsfwFrameworkLauncher {
   }
 }
 
-const msfwCore = new MsfwCore()
+const bizCore = new BizCore()
 
-export default msfwCore
+export default bizCore

@@ -1,5 +1,5 @@
 {
-  "name": "@msfw/anim3d",
+  "name": "@msfw/ly3d",
   "version": "1.0.0",
   "main": "./src/index.js",
   "types": "index.d.ts",
@@ -10,8 +10,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/xingbangzhou/msfw-chain.git",
-    "directory": "packages/msfw-anim3d"
+    "url": "https://github.com/xingbangzhou/msfw.git",
+    "directory": "packages/msfw-ly3d"
   },
   "maintainers": [
     "xingbangzhou"

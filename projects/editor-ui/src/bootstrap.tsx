@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client'
-import App from './pages/App'
+import App from './pages/Index'
 
 const root = document.querySelector('#root')
 

@@ -1,8 +1,8 @@
 {
-  "name": "msfw-chain",
+  "name": "msfw",
   "version": "1.0.0",
   "description": "MSFW Chain",
-  "repository": "https://github.com/xingbangzhou/msfw-chain.git",
+  "repository": "https://github.com/xingbangzhou/msfw.git",
   "author": "zhouxingbang <zhouxingbang92@163.com>",
   "license": "MIT",
   "private": true,
