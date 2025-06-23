@@ -16,13 +16,13 @@
     "@types/node": "^22.5.1",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
-    "mp4box": "^0.5.4",
     "typescript-plugin-css-modules": "^5.1.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.25.4",
     "@msfw/framework": "workspace:^",
     "@msfw/utils": "workspace:^",
+    "@msfw/ly3d": "workspace:^",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^6.26.1",

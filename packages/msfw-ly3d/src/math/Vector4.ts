@@ -304,6 +304,24 @@ export class Vector4 {
     return v.x === this.x && v.y === this.y && v.z === this.z && v.w === this.w
   }
 
+  fromArray(array: number[], offset = 0) {
+    this.x = array[offset]
+    this.y = array[offset + 1]
+    this.z = array[offset + 2]
+    this.w = array[offset + 3]
+
+    return this
+  }
+
+  toArray(array: number[] = [], offset = 0) {
+    array[offset] = this.x
+    array[offset + 1] = this.y
+    array[offset + 2] = this.z
+    array[offset + 3] = this.w
+
+    return array
+  }
+
   random() {
     this.x = Math.random()
     this.y = Math.random()

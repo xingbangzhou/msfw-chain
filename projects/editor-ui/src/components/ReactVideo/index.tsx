@@ -1,7 +1,7 @@
-import { memo } from "react";
+import {memo} from 'react'
 
 const ReactVideo = memo(function ReactVideo() {
-    return <></>
+  return <></>
 })
 
 export default ReactVideo

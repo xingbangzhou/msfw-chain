@@ -220,8 +220,6 @@ export class Quaternion {
   }
 
   invert() {
-    // quaternion is assumed to have unit length
-
     return this.conjugate()
   }
 
@@ -278,8 +276,6 @@ export class Quaternion {
   }
 
   multiplyQuaternions(a: Quaternion, b: Quaternion) {
-    // from http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/code/index.htm
-
     const qax = a._x,
       qay = a._y,
       qaz = a._z,
@@ -300,12 +296,6 @@ export class Quaternion {
   }
 
   random() {
-    // sets this quaternion to a uniform random unit quaternnion
-
-    // Ken Shoemake
-    // Uniform random rotations
-    // D. Kirk, editor, Graphics Gems III, pages 124-132. Academic Press, New York, 1992.
-
     const theta1 = 2 * Math.PI * Math.random()
     const theta2 = 2 * Math.PI * Math.random()
 

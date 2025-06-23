@@ -1,7 +1,7 @@
 import {Camera} from '../cameras/Camera'
 import {Vector4} from '../math/Vector4'
 import {createCanvasElement} from '../utils'
-import {Scene} from './scenes/Scene'
+import {Scene} from '../scenes/Scene'
 
 export interface WebGLRendererParameters {
   canvas?: HTMLCanvasElement | OffscreenCanvas
@@ -97,7 +97,7 @@ export class WebGLRenderer {
   private initContext() {}
 
   private onContextLost = (event: Event) => {
-    console.log('ANIM3D.WebGLRenderer: Context Lost.')
+    console.log('Ly3D.WebGLRenderer: Context Lost.')
 
     event.preventDefault()
 
@@ -105,7 +105,7 @@ export class WebGLRenderer {
   }
 
   private onContextRestore = () => {
-    console.log('ANIM3D.WebGLRenderer: Context Restored.')
+    console.log('Ly3D.WebGLRenderer: Context Restored.')
 
     this._isContextLost = false
 
@@ -113,6 +113,6 @@ export class WebGLRenderer {
   }
 
   private onContextCreationError = (event: Event) => {
-    console.error('ANIM3D.WebGLRenderer: Context could not be created, Error: ', (event as any).statusMessage)
+    console.error('Ly3D.WebGLRenderer: Context could not be created, Error: ', (event as any).statusMessage)
   }
 }

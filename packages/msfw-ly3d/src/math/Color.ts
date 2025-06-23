@@ -15,13 +15,7 @@ export class Color {
 
   set(rOrHex: number, g?: number, b?: number) {
     if (g === undefined && b === undefined) {
-      // r is THREE.Color, hex or string
-
-      const value = rOrHex
-
-      if (typeof value === 'number') {
-        this.setHex(value)
-      }
+      this.setHex(rOrHex)
     } else {
       this.setRGB(rOrHex, g || 0, b || 0)
     }
@@ -79,7 +73,7 @@ export class Color {
     return this
   }
 
-  toArray(array: number[], offset = 0) {
+  toArray(array: number[] = [], offset = 0) {
     array[offset] = this.r
     array[offset + 1] = this.g
     array[offset + 2] = this.b

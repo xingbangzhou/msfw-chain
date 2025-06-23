@@ -4,7 +4,7 @@ export interface BaseEvent<TEventType extends string = string> {
 
 export interface Event<TEventData, TEventType extends string = string, TTarget = unknown> {
   readonly type: TEventType
-  target: TTarget
+  target: TTarget | null
   data: TEventData
 }
 
@@ -74,14 +74,12 @@ export class EventDispatcher<TEventMap extends object = NonNullable<null>> {
         data: data,
       }
 
-      // Make a copy, in case listeners are removed while iterating.
       const array = listenerArray.slice(0)
-
       for (let i = 0, l = array.length; i < l; i++) {
         array[i].call(this, event)
       }
 
-      event.target = null as any
+      event.target = null
     }
   }
 }

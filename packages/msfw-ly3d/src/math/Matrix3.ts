@@ -277,7 +277,7 @@ export class Matrix3 {
     return true
   }
 
-  fromArray(array: ArrayLike<number>, offset = 0) {
+  fromArray(array: number[], offset = 0) {
     for (let i = 0; i < 9; i++) {
       this.elements[i] = array[i + offset]
     }

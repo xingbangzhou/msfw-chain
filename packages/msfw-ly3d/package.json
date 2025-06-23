@@ -2,7 +2,7 @@
   "name": "@msfw/ly3d",
   "version": "1.0.0",
   "main": "./src/index.js",
-  "types": "index.d.ts",
+  "type": "module",
   "license": "MIT",
   "keywords": [
     "typescript",

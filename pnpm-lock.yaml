@@ -101,6 +101,9 @@ importers:
       '@msfw/framework':
         specifier: workspace:^
         version: link:../../packages/msfw-framework
+      '@msfw/ly3d':
+        specifier: workspace:^
+        version: link:../../packages/msfw-ly3d
       '@msfw/utils':
         specifier: workspace:^
         version: link:../../packages/msfw-utils
@@ -132,9 +135,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.6(@types/react@18.3.20)
-      mp4box:
-        specifier: ^0.5.4
-        version: 0.5.4
       typescript-plugin-css-modules:
         specifier: ^5.1.0
         version: 5.1.0(typescript@5.8.3)
@@ -3120,9 +3120,6 @@ packages:
   minipass@7.1.2:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
     engines: {node: '>=16 || 14 >=14.17'}
-
-  mp4box@0.5.4:
-    resolution: {integrity: sha512-GcCH0fySxBurJtvr0dfhz0IxHZjc1RP+F+I8xw+LIwkU1a+7HJx8NCDiww1I5u4Hz6g4eR1JlGADEGJ9r4lSfA==}
 
   mrmime@2.0.1:
     resolution: {integrity: sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ==}
@@ -8056,8 +8053,6 @@ snapshots:
   minimist@1.2.8: {}
 
   minipass@7.1.2: {}
-
-  mp4box@0.5.4: {}
 
   mrmime@2.0.1: {}
 

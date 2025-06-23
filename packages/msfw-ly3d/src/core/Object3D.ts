@@ -19,7 +19,7 @@ const _quaternion = /*@__PURE__*/ new Quaternion()
 const _xAxis = /*@__PURE__*/ new Vector3(1, 0, 0)
 const _yAxis = /*@__PURE__*/ new Vector3(0, 1, 0)
 const _zAxis = /*@__PURE__*/ new Vector3(0, 0, 1)
-
+0
 const _addedEvent = {}
 const _removedEvent = {}
 
@@ -31,9 +31,9 @@ interface Object3DEventMap {
 
   removed: NonNullable<unknown>
 
-  childadded: {child: Object3D}
+  childadded: {child: Object3D | null}
 
-  childremoved: {child: Object3D}
+  childremoved: {child: Object3D | null}
 }
 
 class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> extends EventDispatcher<TEventMap> {
@@ -80,8 +80,6 @@ class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> extends Ev
 
   readonly id: number
   readonly uuid: string
-
-  protected isCamera?: boolean
 
   parent: Object3D | null
   children: Object3D[]
@@ -131,21 +129,14 @@ class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> extends Ev
   }
 
   setRotationFromMatrix(m: Matrix4) {
-    // assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
-
     this.quaternion.setFromRotationMatrix(m)
   }
 
   setRotationFromQuaternion(q: Quaternion) {
-    // assumes q is normalized
-
     this.quaternion.copy(q)
   }
 
   rotateOnAxis(axis: Vector3, angle: number) {
-    // rotate object on axis in object space
-    // axis is assumed to be normalized
-
     _q1.setFromAxisAngle(axis, angle)
 
     this.quaternion.multiply(_q1)
@@ -213,8 +204,6 @@ class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> extends Ev
   }
 
   lookAt(x: number, y: number, z: number) {
-    // This method does not support objects having non-uniformly-scaled parent(s)
-
     _target.set(x, y, z)
 
     const parent = this.parent
@@ -223,7 +212,7 @@ class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> extends Ev
 
     _position.setFromMatrixPosition(this.matrixWorld)
 
-    if (this.isCamera) {
+    if ((this as any).isCamera) {
       _m1.lookAt(_position, _target, this.up)
     } else {
       _m1.lookAt(_target, _position, this.up)
@@ -285,7 +274,7 @@ class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> extends Ev
       object.dispatchEvent('removed', _removedEvent)
 
       _childremovedEvent.child = object
-      this.dispatchEvent('childremoved' as any, _childremovedEvent)
+      ;(this as any as Object3D).dispatchEvent('childremoved', _childremovedEvent)
       _childremovedEvent.child = null
     }
 
@@ -307,10 +296,6 @@ class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> extends Ev
   }
 
   attach(object: Object3D) {
-    // adds object as a child of this, while maintaining the object's world transform
-
-    // Note: This method does not support scene graphs having non-uniformly-scaled nodes(s)
-
     this.updateWorldMatrix(true, false)
 
     _m1.copy(this.matrixWorld).invert()
@@ -329,10 +314,10 @@ class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> extends Ev
 
     object.updateWorldMatrix(false, true)
 
-    // object.dispatchEvent(_addedEvent)
+    object.dispatchEvent('added', _addedEvent)
 
-    // _childaddedEvent.child = object
-    // this.dispatchEvent(_childaddedEvent)
+    _childaddedEvent.child = object
+    ;(this as any as Object3D).dispatchEvent('childadded', _childaddedEvent)
     _childaddedEvent.child = null
 
     return this
@@ -436,8 +421,6 @@ class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> extends Ev
       force = true
     }
 
-    // make sure descendants are updated if required
-
     const children = this.children
 
     for (let i = 0, l = children.length; i < l; i++) {
@@ -463,8 +446,6 @@ class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> extends Ev
         this.matrixWorld.multiplyMatrices(this.parent.matrixWorld, this.matrix)
       }
     }
-
-    // make sure descendants are updated
 
     if (updateChildren === true) {
       const children = this.children

@@ -86,8 +86,6 @@ export class Euler {
   }
 
   setFromRotationMatrix(m: Matrix4, order = this._order, update = true) {
-    // assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
-
     const te = m.elements
     const m11 = te[0],
       m12 = te[4],

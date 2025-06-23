@@ -1,0 +1,15 @@
+export {WebGLRenderer} from './renderers/WebGLRenderer'
+export {Scene} from './scenes/Scene'
+export {Camera} from './cameras/Camera'
+// math
+export * from './math/MathUtils'
+export {Matrix3} from './math/Matrix3'
+export {Matrix4} from './math/Matrix4'
+export {Vector2} from './math/Vector2'
+export {Vector3} from './math/Vector3'
+export {Vector4} from './math/Vector4'
+export {Euler} from './math/Euler'
+export {Quaternion} from './math/Quaternion'
+export {Color} from './math/Color'
+// core
+export {Object3D} from './core/Object3D'

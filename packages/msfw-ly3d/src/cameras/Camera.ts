@@ -12,6 +12,8 @@ class Camera extends Object3D {
     this.projectionMatrixInverse = new Matrix4()
   }
 
+  readonly isCamera = true
+
   matrixWorldInverse: Matrix4
 
   projectionMatrix: Matrix4

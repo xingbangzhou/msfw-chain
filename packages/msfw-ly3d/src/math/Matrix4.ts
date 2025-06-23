@@ -115,8 +115,6 @@ export class Matrix4 {
   }
 
   extractRotation(m: Matrix4) {
-    // this method does not support reflection matrices
-
     const te = this.elements
     const me = m.elements
 
@@ -236,9 +234,6 @@ export class Matrix4 {
       n42 = te[7],
       n43 = te[11],
       n44 = te[15]
-
-    //TODO: make this more efficient
-    //( based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm )
 
     return (
       n41 *
@@ -718,7 +713,6 @@ export class Matrix4 {
     const sy = _v1.set(te[4], te[5], te[6]).length()
     const sz = _v1.set(te[8], te[9], te[10]).length()
 
-    // if determine is negative, we need to invert one scale
     const det = this.determinant()
     if (det < 0) sx = -sx
 
@@ -726,7 +720,6 @@ export class Matrix4 {
     position.y = te[13]
     position.z = te[14]
 
-    // scale the rotation part
     _m1.copy(this)
 
     const invSX = 1 / sx
@@ -799,7 +792,7 @@ export class Matrix4 {
     return this
   }
 
-  toArray(array = [] as number[], offset = 0) {
+  toArray(array: number[] = [], offset = 0) {
     const te = this.elements
 
     array[offset] = te[0]
