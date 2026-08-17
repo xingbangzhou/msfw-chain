@@ -1,0 +1,41 @@
+{
+  "name": "@xuf/sdk",
+  "version": "1.0.0",
+  "main": "./src/index.js",
+  "types": "index.d.ts",
+  "license": "MIT",
+  "keywords": [
+    "typescript",
+    "xuf"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xingbangzhou/xuf.git",
+    "directory": "packages/xuf-sdk"
+  },
+  "maintainers": [
+    "xingbangzhou"
+  ],
+  "scripts": {
+    "build": "pnpm prebuild && pnpm build:node && pnpm build:modern && pnpm build:stable && pnpm build:types && pnpm build:copy-files",
+    "build:node": "node ../../scripts/build.mjs node",
+    "build:modern": "node ../../scripts/build.mjs modern",
+    "build:stable": "node ../../scripts/build.mjs stable",
+    "build:types": "node ../../scripts/buildTypes.mjs",
+    "build:copy-files": "node ../../scripts/copyFiles.mjs",
+    "prebuild": "rimraf dist tsconfig.build.tsbuildinfo",
+    "release": "pnpm build && pnpm publish dist --access public --no-git-checks"
+  },
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "@xuf/utils": ">=1.0.0"
+  },
+  "devDependencies": {
+    "@xuf/tsconfig": "^1.0.0",
+    "@xuf/utils": "workspace:^"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

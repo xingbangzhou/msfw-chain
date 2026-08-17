@@ -1,0 +1,12 @@
+{
+  "extends": "@xuf/tsconfig",
+  "compilerOptions": {
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "@xuf/utils": ["../xuf-utils/src"],
+      "@xuf/utils/*": ["../xuf-utils/src/*"]
+    },
+  }
+}
