@@ -3,7 +3,7 @@ export default class XufDestructor {
 
   push(fn: () => void) {
     if (!this._cleanFns) this._cleanFns = [fn]
-    else if (this._cleanFns.includes(fn)) {
+    else if (!this._cleanFns.includes(fn)) {
       this._cleanFns.push(fn)
     }
   }
