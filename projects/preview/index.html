@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>xuf-lka 特效预览</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+      body { display: flex; flex-direction: column; background: #1e1f22; color: #e6e6e6; }
+
+      header { padding: 12px 16px; border-bottom: 1px solid #33353a; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+      header h1 { font-size: 15px; margin: 0; font-weight: 600; }
+      header .spacer { flex: 1; }
+
+      .btn { background: #3a3d44; color: #e6e6e6; border: 1px solid #4a4d55; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 13px; }
+      .btn:hover { background: #464a52; }
+      .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+      main { flex: 1; display: flex; min-height: 0; }
+      #stage { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+      /* 透明棋盘格 */
+      #stage.checker {
+        background-color: #2b2d31;
+        background-image:
+          linear-gradient(45deg, #3a3d44 25%, transparent 25%),
+          linear-gradient(-45deg, #3a3d44 25%, transparent 25%),
+          linear-gradient(45deg, transparent 75%, #3a3d44 75%),
+          linear-gradient(-45deg, transparent 75%, #3a3d44 75%);
+        background-size: 24px 24px;
+        background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+      }
+      #player { width: 80%; height: 80%; }
+
+      #dropHint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #8a8d94; font-size: 14px; pointer-events: none; text-align: center; padding: 24px; }
+      #stage.dragover::after { content: ""; position: absolute; inset: 8px; border: 2px dashed #5b8cff; border-radius: 10px; }
+
+      aside { width: 260px; border-left: 1px solid #33353a; padding: 14px; display: flex; flex-direction: column; gap: 14px; overflow: auto; }
+      .field { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #b7bac1; }
+      .row { display: flex; align-items: center; gap: 8px; }
+      input[type="range"] { width: 100%; }
+      .kv { font-size: 12px; color: #b7bac1; line-height: 1.7; }
+      .kv b { color: #e6e6e6; font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>xuf-lka 特效预览</h1>
+      <button class="btn" id="btnOpen">打开文件</button>
+      <input type="file" id="file" accept=".lka,.ymat,application/octet-stream" hidden />
+      <button class="btn" id="btnPlay" disabled>播放</button>
+      <button class="btn" id="btnPause" disabled>暂停</button>
+      <button class="btn" id="btnReplay" disabled>重播</button>
+      <label class="row" style="font-size:13px"><input type="checkbox" id="chkLoop" checked /> 循环</label>
+      <div class="spacer"></div>
+      <label class="row" style="font-size:13px"><input type="checkbox" id="chkChecker" checked /> 透明棋盘格</label>
+      <label class="row" style="font-size:13px">背景 <input type="color" id="bgColor" value="#2b2d31" /></label>
+    </header>
+
+    <main>
+      <div id="stage" class="checker">
+        <div id="player"></div>
+        <div id="dropHint">拖拽 .lka 特效文件到此处，或点击「打开文件」</div>
+      </div>
+      <aside>
+        <div class="field">
+          <label>帧进度 <span id="frameLabel">0 / 0</span></label>
+          <input type="range" id="seek" min="0" max="0" value="0" disabled />
+        </div>
+        <div class="kv" id="meta">
+          尺寸: <b>-</b><br />
+          时长: <b>-</b><br />
+          帧率: <b>-</b><br />
+          总帧: <b>-</b>
+        </div>
+      </aside>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
